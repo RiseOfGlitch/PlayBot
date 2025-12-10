@@ -24,21 +24,38 @@ namespace constants
     namespace swerve
     {
         // Motor and encoders CAN IDs
-        constexpr CANid_t frontLeftDriveCANid = 1;
-        constexpr CANid_t frontLeftTurnCANid = 2;
-        constexpr CANid_t frontLeftEncoderCANid= 9;
+        // constexpr CANid_t frontLeftDriveCANid = 1;
+        // constexpr CANid_t frontLeftTurnCANid = 2;
+        // constexpr CANid_t frontLeftEncoderCANid= 9;
 
-        constexpr CANid_t frontRightDriveCANid = 3;
-        constexpr CANid_t frontRightTurnCANid = 4;
-        constexpr CANid_t frontRightEncoderCANid = 10;
+        // constexpr CANid_t frontRightDriveCANid = 3;
+        // constexpr CANid_t frontRightTurnCANid = 4;
+        // constexpr CANid_t frontRightEncoderCANid = 10;
 
-        constexpr CANid_t backLeftDriveCANid = 5;
-        constexpr CANid_t backLeftTurnCANid = 6;
-        constexpr CANid_t backLeftEncoderCANid = 11;
+        // constexpr CANid_t backLeftDriveCANid = 5;
+        // constexpr CANid_t backLeftTurnCANid = 6;
+        // constexpr CANid_t backLeftEncoderCANid = 11;
 
-        constexpr CANid_t backRightDriveCANid = 7;
-        constexpr CANid_t backRightTurnCANid = 8;
-        constexpr CANid_t backRightEncoderCANid = 12;
+        // constexpr CANid_t backRightDriveCANid = 7;
+        // constexpr CANid_t backRightTurnCANid = 8;
+        // constexpr CANid_t backRightEncoderCANid = 12;
+        
+        // Motor and encoders CAN IDs
+        constexpr CANid_t frontLeftDriveCANid = 10;
+        constexpr CANid_t frontLeftTurnCANid = 11;
+        constexpr CANid_t frontLeftEncoderCANid= 20;
+
+        constexpr CANid_t frontRightDriveCANid = 12;
+        constexpr CANid_t frontRightTurnCANid = 13;
+        constexpr CANid_t frontRightEncoderCANid = 21;
+
+        constexpr CANid_t backLeftDriveCANid = 14;
+        constexpr CANid_t backLeftTurnCANid = 15;
+        constexpr CANid_t backLeftEncoderCANid = 22;
+
+        constexpr CANid_t backRightDriveCANid = 16;
+        constexpr CANid_t backRightTurnCANid = 17;
+        constexpr CANid_t backRightEncoderCANid = 23;
 
         // PID, feedforward, and other configurations for the motors
         constexpr hardware::motor::MotorConfiguration driveMotorConfig{
@@ -49,7 +66,7 @@ namespace constants
         };
 
         constexpr hardware::motor::MotorConfiguration turnMotorConfig{
-            30_A,           // Current Limit
+            20_A,           // Current Limit
             true,           // Brake Mode
             1.0, 0.0, 0.2,  // P, I , D
             0.0, 0.0, 0.0   // S, V, A

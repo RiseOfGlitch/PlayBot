@@ -22,5 +22,5 @@ class Robot : public frc::TimedRobot
         frc2::Command  *m_autonomousCommand = nullptr;
 
         // Instantiate the Robot container and get a pointer to the class
-        RobotContainer *m_robotContainer    = RobotContainer::GetInstance();
+        RobotContainer *m_robotContainer = nullptr;
 };

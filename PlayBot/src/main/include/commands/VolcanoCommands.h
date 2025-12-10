@@ -32,7 +32,7 @@ inline frc2::CommandPtr VolcanoShootOneBall(Volcano* volcano)
             return volcano->IsFlywheelAtSpeed();
         }
     // Then index and wait until the kick sensor is triggered if its not already
-    ).AlongWith(
+    ).AndThen(
         frc2::InstantCommand{[volcano]() {
             volcano->SetIndexers(true);
         }, { volcano }}

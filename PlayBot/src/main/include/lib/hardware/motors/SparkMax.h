@@ -51,10 +51,11 @@ namespace hardware
                 inline void ConfigureMotor(MotorConfiguration config) override // Configure the motor with default settings
                 {
                     // Configure the angle motor
-                    rev::spark::SparkMaxConfig sparkMaxConfig{};
+                    static rev::spark::SparkMaxConfig sparkMaxConfig{};
 
                     // Configure the motor controller
                     sparkMaxConfig
+                        .Inverted(true)
                         .SetIdleMode(config.breakMode 
                                             ? rev::spark::SparkBaseConfig::IdleMode::kBrake 
                                             : rev::spark::SparkBaseConfig::IdleMode::kCoast)
@@ -62,8 +63,8 @@ namespace hardware
 
                     // All you have to do for encoders is make sure that they are in turns. If a particular motor only does counts... submit a pull request.
                     sparkMaxConfig.encoder // Do not set counts per second, only counts in brushed motors (ie cims)
-                        .PositionConversionFactor(1) // in turns (This will have decimals precision)
-                        .VelocityConversionFactor(1); // in turns per second
+                        .PositionConversionFactor((2.0 * std::numbers::pi) / 21.5) // in turns (This will have decimals precision)
+                        .VelocityConversionFactor(((2.0 * std::numbers::pi) / 21.5) / 60); // in turns per second
 
                     // Configure the closed loop controller
                     sparkMaxConfig.closedLoop
@@ -79,19 +80,13 @@ namespace hardware
                 inline void SetReferenceState(double motorInput) override // output to motor within (-1,1)
                 {
                     m_turnClosedLoopController.SetReference(motorInput, 
-                                                            rev::spark::SparkMax::ControlType::kDutyCycle,
-                                                            rev::spark::ClosedLoopSlot::kSlot0, 
-                                                            m_feedforward.Calculate(0_tps).value(),
-                                                            rev::spark::SparkClosedLoopController::ArbFFUnits::kVoltage);
+                                                            rev::spark::SparkMax::ControlType::kDutyCycle);
                 }
 
                 inline void SetReferenceState(units::turns_per_second_t motorInput) override // output to motor within (-1,1)
                 {
                     m_turnClosedLoopController.SetReference(motorInput.value(), 
-                                                            rev::spark::SparkMax::ControlType::kVelocity,
-                                                            rev::spark::ClosedLoopSlot::kSlot0, 
-                                                            m_feedforward.Calculate(motorInput).value(),
-                                                            rev::spark::SparkClosedLoopController::ArbFFUnits::kVoltage);
+                                                            rev::spark::SparkMax::ControlType::kVelocity);
                 }
 
                 inline void SetReferenceState(units::volt_t motorInput) override // output to motor within (-1,1)
@@ -103,10 +98,7 @@ namespace hardware
                 inline void SetReferenceState(units::turn_t motorInput) override // output to motor in turns
                 {
                     m_turnClosedLoopController.SetReference(motorInput.value(), 
-                                                            rev::spark::SparkMax::ControlType::kPosition,
-                                                            rev::spark::ClosedLoopSlot::kSlot0, 
-                                                            m_feedforward.Calculate(units::turns_per_second_t{GetPosition().value() - motorInput.value()}).value(),
-                                                            rev::spark::SparkClosedLoopController::ArbFFUnits::kVoltage);
+                                                            rev::spark::SparkMax::ControlType::kPosition);
                 }
 
                 inline units::turn_t GetPosition() override // Returns the position of the motor in turns

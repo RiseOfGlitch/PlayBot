@@ -58,7 +58,7 @@ frc::SwerveModuleState SwerveModule::GetState()
 {   
     // Determine the module wheel velocity
     units::meters_per_second_t driveVelocity = units::meters_per_second_t{m_driveMotor.GetVelocity().value() * m_driveConversion.value()};
-    units::radian_t            anglePosition = units::radian_t{m_angleMotor.GetPosition().value() * m_angleConversion.value()};
+    units::radian_t            anglePosition = units::radian_t{m_angleMotor.GetPosition().value()};
         
     // Return the swerve module state
     return {driveVelocity, anglePosition};
@@ -74,7 +74,7 @@ frc::SwerveModulePosition SwerveModule::GetPosition()
     
     // Determine the module wheel position
     drivePosition = units::meter_t{m_driveMotor.GetPosition().value() / m_driveConversion.value()};
-    anglePosition = units::radian_t{m_angleMotor.GetPosition().value() / m_angleConversion.value()};
+    anglePosition = units::radian_t{m_angleMotor.GetPosition().value()};
 
     // Return the swerve module position
     return {drivePosition, anglePosition};
